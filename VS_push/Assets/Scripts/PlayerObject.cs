@@ -31,12 +31,13 @@ public class PlayerObject : MonoBehaviour
     public bool ButterBee;
     public bool DynamiteBlow;
 
-    // I might have to change/move these idk...
     public bool Guard;
+    public bool KO;
+
+    // I might have to change/move these idk...
     public bool Evasion;
     public bool Miss;
     public bool Dazed;
-    public bool KO;
 
     // Stores player's previous moves including things like missing the enemy;
     public int prevMove;

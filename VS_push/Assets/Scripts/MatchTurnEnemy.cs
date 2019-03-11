@@ -7,11 +7,18 @@ using UnityEngine;
 public class MatchTurnEnemy : MonoBehaviour
 {
     public MatchTurn turn;
+    public EnemyObject enemy;
+    public PlayerObject player;
 
     public void doEnemyTurn()
     {
         Debug.Log("You are inside Enemy turn!");
 
+        // If enemy was defending last turn; turn it off
+        enemy.Guard = false;
+
+
+        // this function implements AI to decide which move to take
     }
 
 

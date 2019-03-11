@@ -31,12 +31,13 @@ public class EnemyObject : MonoBehaviour
     public bool ButterBee;
     public bool DynamiteBlow;
 
-    // I might have to change/move these idk...
-    public int Guard;
-    public int Evasion;
-    public int Miss;
-    public int Dazed;
+    public bool Guard;
     public bool KO;
+
+    // I might have to change/move these idk...
+    public bool Evasion;
+    public bool Miss;
+    public bool Dazed;
 
     // Stores player's previous moves including things like missing the enemy;
     public int prevMove;
@@ -66,11 +67,15 @@ public class EnemyObject : MonoBehaviour
             }
             if (PlayerRank == 2)
             {
-                populateRank1EnemyObject();
+                populateRank2EnemyObject();
+                // CHANGE THIS BACK TO RANK 1 ENEMY LATER
+                // populateRank1EnemyObject();
             }
             else
             {
-                populateRankCEnemyObject();
+                populateRank2EnemyObject();
+                // CHANGE THIS BACK T C ENEMY LATER
+                // populateRankCEnemyObject();
             }
         }
     }
@@ -129,7 +134,7 @@ public class EnemyObject : MonoBehaviour
 
         populateDerivedValues();
 
-        SundayPunch = false;
+        SundayPunch = true;     // CHANGE THIS TO FALSE LATER
         ButterBee = false;
         DynamiteBlow = false;
     }

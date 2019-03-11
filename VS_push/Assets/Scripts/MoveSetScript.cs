@@ -72,23 +72,54 @@ public class MoveSetScript : MonoBehaviour
         // check for valid moveNum 
         // add later incase i add moves rip
 
-        int baseDMG = getMoveBaseDMG(moveNum);
         int costSP = getMoveSetCost(moveNum);
         int recSP = getSPrecover(moveNum);
+        Debug.Log("before calc recSP = " + recSP);
         int recHP = getHPrecover(moveNum);
 
+        int baseDMG = getMoveBaseDMG(moveNum);
         int attackerDMG = getAdjustedDMG(baseDMG);
-
+        bool guard = getGuard(); // gets if the one recieving move has guard up
+        if (guard) // might decide to have crit ignore guard, when crit exists
+        {
+            attackerDMG = (int)(attackerDMG / 2);
+        }
 
         if (turn.PlayerTurn)
         {
-            Debug.Log("it is player's turn!");
+
+
+            if (moveNum == 6)
+            {
+                player.Guard = true;
+            }
 
             enemy.HP -= attackerDMG;
+
+            // must prevent spending more SP than have and such
             player.SP -= costSP;
-            player.SP += recSP;
-            Debug.Log("the SP rec is : " + recSP);
-            player.HP += recHP;
+
+            if (player.SP+recSP > player.MaxSP)
+            {
+                player.SP = player.MaxSP;
+                Debug.Log("the SP rec is : " + (player.MaxSP - player.SP));
+            }
+            else
+            {
+                player.SP += recSP;
+                Debug.Log("the SP rec is : " + recSP);
+            }
+
+            if (player.HP + recHP > player.MaxHP)
+            {
+                player.HP = player.MaxHP;
+                Debug.Log("the HP rec is : " + (player.MaxHP - player.HP));
+            }
+            else
+            {
+                player.HP += recHP;
+                Debug.Log("the HP rec is : " + recHP);
+            }
 
 
             // update HP/SP bars
@@ -108,6 +139,17 @@ public class MoveSetScript : MonoBehaviour
 
     }
 
+    public bool getGuard()
+    {
+        if (turn.PlayerTurn)
+        {
+            return (enemy.Guard);
+        }
+        else
+        {
+            return (enemy.Guard);
+        }
+    }
 
     public int getMoveBaseDMG(int moveNum)
     {
