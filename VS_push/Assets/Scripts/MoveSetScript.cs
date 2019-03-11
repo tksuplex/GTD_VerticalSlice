@@ -6,7 +6,6 @@ using System;
 
 public class MoveSetScript : MonoBehaviour
 {
-
     public EnemyObject enemy;
     public PlayerObject player;
     public MatchTurn turn;

@@ -4333,7 +4333,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerText: {fileID: 1258195667}
   enemyText: {fileID: 1095796368}
-  errorText: {fileID: 0}
+  errorText: {fileID: 1384505323}
   player: {fileID: 986589544}
   enemy: {fileID: 884518245}
 --- !u!1 &2006789171
@@ -5195,7 +5195,7 @@ MonoBehaviour:
   player: {fileID: 986589544}
   enemy: {fileID: 884518245}
   moveset: {fileID: 8745412247619669970}
-  btext: {fileID: 0}
+  btext: {fileID: 2001028822}
   allButtonsObj: {fileID: 0}
   counterButton: {fileID: 0}
   sundayButton: {fileID: 0}
