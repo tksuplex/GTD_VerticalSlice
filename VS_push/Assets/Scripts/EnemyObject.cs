@@ -2,36 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 // Unless denoted by a commented out link, TK wrote literally everything here
 
 public class EnemyObject : MonoBehaviour
 {
     public SavePrefs prefs;
-    public int PlayerRank;
+    public PlayerObject player;
+    public MoveSetScript moveSet;
+
     public Image HPbar;
-    float HPpercent;
 
-    public bool KO;
-
-    public int MaxHP;
-    public int HP;
-    public int MaxSP;
-    public int SP;
-    public int PWR;
-    public int SPD;
-    public int TGH;
+    [HideInInspector]
+    public int PlayerRank, MaxHP, HP, MaxSP, SP, PWR, SPD, TGH;
 
     // DEF = % of enemy attack damage can be mitigated by player
     // DMG = % of attacks base damage can be used by player
     // EVA = % chance of evading enemy attack
     // LCK = % chance of a critical attack (DMG*1.5)
     // REC = % of HP/SP recovered when using Recovery Move
-    public float DMG;
-    public float DEF;
-    public float EVA;
-    public float LCK;
-    public float REC;
+    // CounterChance = % chance of generating a counter
+    [HideInInspector]
+    public float HPpercent, DMG, DEF, EVA, LCK, REC, CounterChance;
 
     // Special abilities player can learn by ranking up & spending EXP
     public bool SundayPunch;
@@ -43,16 +36,10 @@ public class EnemyObject : MonoBehaviour
     public int Evasion;
     public int Miss;
     public int Dazed;
-
-    // Set the default attack number for offensive moves
-    public int baseJab;
-    public int baseLightAttack; // 'Straight' on player menu
-    public int baseHeavyAttack; // 'Hook' on player menu
-    public int baseCounter;
-    public int baseSunday;
+    public bool KO;
 
     // Stores player's previous moves including things like missing the enemy;
-    public string prevMove;
+    public int prevMove;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +51,7 @@ public class EnemyObject : MonoBehaviour
 
     public void populateEnemyObject()
     {
+        prevMove = -1; // Previous move doesn't exist because just started
         if (prefs.GetPrefBool("Sparring"))
         {
             // If training, populate with player's stats -1 each
@@ -84,12 +72,7 @@ public class EnemyObject : MonoBehaviour
             {
                 populateRankCEnemyObject();
             }
-
         }
-
-        // If player rank == 3
-        populateRank2EnemyObject();
-        
     }
 
     void populateRank2EnemyObject()
@@ -98,7 +81,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 4;
         TGH = 7;
 
-        populateDerivedValues();
+        player.populateDerivedValues();
 
         SundayPunch = true;
         ButterBee = false;
@@ -111,7 +94,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 10;
         TGH = 6;
 
-        populateDerivedValues();
+        player.populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = true;
@@ -124,7 +107,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 3;
         TGH = 12;
 
-        populateDerivedValues();
+        player.populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = false;
@@ -140,43 +123,17 @@ public class EnemyObject : MonoBehaviour
         SPD--;
         TGH--;
 
-        populateDerivedValues();
+        player.populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = false;
         DynamiteBlow = false;
     }
 
-    void populateDerivedValues()
-    {
-        MaxSP = (int)(PWR * 10);
-        SP = MaxSP;
-        MaxHP = (int)((TGH * 100) / 2);
-        HP = MaxHP;
-
-        DMG = ((float)PWR * 10) / 100;
-        DEF = ((float)TGH * 10) / 200;
-        EVA = ((float)SPD * 10) / 300;
-        LCK = ((float)PWR + TGH + (2 * SPD)) / 200;
-        REC = (float)SPD / 200;
-    }
-
     void displayEnemyStats()
     {
         Debug.Log("Enemy Values:");
-        Debug.Log("HP: " + MaxHP);
-        Debug.Log("SP: " + MaxSP);
-        Debug.Log("PWR: " + PWR);
-        Debug.Log("SPD: " + SPD);
-        Debug.Log("TGH: " + TGH);
-        Debug.Log("DMG %: " + DMG);
-        Debug.Log("EVA %: " + EVA);
-        Debug.Log("LCK %: " + LCK);
-        Debug.Log("REC %: " + REC);
-
-        Debug.Log("Sunday: " + SundayPunch);
-        Debug.Log("ButterBee: " + ButterBee);
-        Debug.Log("Dynamite: " + DynamiteBlow);
+        player.consoleStats();
     }
 
     public void updateEnemyBar()

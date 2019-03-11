@@ -43,3 +43,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4010507a66a2ef94089891db1aebafd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefs: {fileID: 0}
+  player: {fileID: 0}
+  moveSet: {fileID: 0}
+  HPbar: {fileID: 0}
+  KO: 0
+  MaxHP: 0
+  HP: 0
+  MaxSP: 0
+  SP: 0
+  PWR: 0
+  SPD: 0
+  TGH: 0
+  DMG: 0
+  DEF: 0
+  EVA: 0
+  LCK: 0
+  REC: 0
+  CounterChance: 0
+  SundayPunch: 0
+  ButterBee: 0
+  DynamiteBlow: 0
+  Guard: 0
+  Evasion: 0
+  Miss: 0
+  Dazed: 0
+  baseCounter: 0
+  baseJab: 0
+  baseLightAttack: 0
+  baseHeavyAttack: 0
+  baseSunday: 0
+  baseDynamite: 0
+  prevMove: 0

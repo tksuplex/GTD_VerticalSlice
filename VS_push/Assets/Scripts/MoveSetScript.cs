@@ -31,10 +31,6 @@ public class MoveSetScript : MonoBehaviour
      * 10 Dazed / Dazed by enemy cannot attack
      */
 
-    //      public int[] moveSetDMG = new int[11];
-    //    List<int> moveSetDMG = new List<int>();
-    //    List<int> moveSetCost = new List<int>();
-
     // -----------------------------------------------------------------------//
 
     // Start is called before the first frame update
@@ -71,7 +67,7 @@ public class MoveSetScript : MonoBehaviour
 
     }
 
-public int getMoveBaseDMG(int moveNum)
+    public int getMoveBaseDMG(int moveNum)
     {
         if (moveNum < 6 && moveNum >= 0)
         {
@@ -93,18 +89,79 @@ public int getMoveBaseDMG(int moveNum)
 
     public int getHPrecover(int moveNum)
     {
+        int hpRecover = 0;
+
+        if (turn.PlayerTurn)
+        {
+            // It is players turn
+            hpRecover = (int)(player.REC * player.MaxHP);
+        }
+        else if (turn.EnemyTurn)
+        {
+            // It is enemy turn
+            hpRecover = (int)(enemy.REC * enemy.MaxHP * 0.90);
+        }
+
+        if (moveNum == 0 || moveNum >= 9)
+        {
+            hpRecover = (int)(hpRecover * 0.5);
+        }
+        else if (moveNum != 7)
+        {
+            return 0;
+        }
+
+        return hpRecover;
+    }
+
+    public int getSPrecover(int moveNum)
+    {
+        int spRecover = 0;
+
+        if (turn.PlayerTurn)
+        {
+            // It is players turn
+            spRecover = (int)(player.REC * player.MaxHP * 2);
+        }
+        else if (turn.EnemyTurn)
+        {
+            // It is enemy turn
+            spRecover = (int)(enemy.REC * enemy.MaxHP * 1.85);
+        }
+
+        if (moveNum == 0 || moveNum >= 9)
+        {
+            spRecover = (int)(spRecover * 0.5);
+            return spRecover;
+        }
+        else if (moveNum == 6)
+        {
+            return spRecover * 2;
+        }
+        else if (moveNum == 1 || moveNum == 7)
+        {
+            return spRecover;
+        }
+
         return 0;
     }
 
     public void doMove(int moveNum)
     {
+        // check for valid moveNum 
+        // add later incase i add moves rip
+
         int baseDMG = getMoveBaseDMG(moveNum);
         int costSP = getMoveSetCost(moveNum);
+        int recSP = getSPrecover(moveNum);
+        int recHP = getHPrecover(moveNum);
+
+        int attackerDMG = getAdjustedDMG(baseDMG);
+
 
         if (turn.PlayerTurn)
         {
             Debug.Log("it is player's turn!");
-            player.HP -= baseDMG;
             enemy.HP -= baseDMG;
             player.SP -= costSP;
             player.updatePlayerBar();
@@ -117,24 +174,45 @@ public int getMoveBaseDMG(int moveNum)
             Debug.Log("it is enemy's turn!");
         }
 
+        // UPDATE prevMove with the move that happened (number) (could be a miss or counter)
 
     }
 
+    int getAdjustedDMG(int baseDMG)
+    {
+        // adjusts baseDMG for attackers pwr stat
+        // then adjusts damage for defenders tgh stat
+        int betterDMG = 0;
+        int afterDEF = 0;
+
+        if (turn.PlayerTurn)
+        {
+            // It is players turn
+            betterDMG = (int)(player.DMG * baseDMG);
+            afterDEF = (int)(betterDMG * (1 - enemy.DEF));
+            Debug.Log("starting damage: " + baseDMG);
+            Debug.Log("adjusted for power: " + betterDMG);
+            Debug.Log("adjusted for defense: " + afterDEF);
+        }
+        else if (turn.EnemyTurn)
+        {
+            // It is enemy turn
+            betterDMG = (int)(enemy.DMG * baseDMG);
+            afterDEF = (int)(betterDMG * (1 - player.DEF));
+        }
+
+        return afterDEF;
+    }
 
 
+    /// <summary>
+    /// /////////////////////////////////////////////////////////////////////////////////////////
+    /// </summary>
 
     public void testPunchPlayer()
     {
         // moveNum, false=enemyTurn, true=playerTurn
         doMove(0);
 
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -243,6 +243,7 @@ public class SpendEXPScript : MonoBehaviour
         }
         else
         {
+            Debug.Log("buy ability calling wtih cost of " + AbilityCost);
             prefs.buyAbilityYo(abilityNum, AbilityCost);
             cheapoUpdate();
         }

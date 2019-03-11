@@ -101,6 +101,7 @@ public class SavePrefs : MonoBehaviour
 
     public void spendEXP(int cost)
     {
+        PlayerEXP = GetPref("PlayerEXP");
         SavePref("PlayerEXP", (PlayerEXP - cost));
     }
 

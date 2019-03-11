@@ -4509,6 +4509,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerObject
       objectReference: {fileID: 0}
+    - target: {fileID: 3863147181730146897, guid: c2e484275472f644eaccdb38910fd629,
+        type: 3}
+      propertyPath: HPbar
+      value: 
+      objectReference: {fileID: 1453208118}
+    - target: {fileID: 3863147181730146897, guid: c2e484275472f644eaccdb38910fd629,
+        type: 3}
+      propertyPath: SPbar
+      value: 
+      objectReference: {fileID: 1544337194}
+    - target: {fileID: 3863147181730146897, guid: c2e484275472f644eaccdb38910fd629,
+        type: 3}
+      propertyPath: moveSet
+      value: 
+      objectReference: {fileID: 8745412247619669970}
     - target: {fileID: 3863147181730146896, guid: c2e484275472f644eaccdb38910fd629,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4564,16 +4579,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3863147181730146897, guid: c2e484275472f644eaccdb38910fd629,
-        type: 3}
-      propertyPath: HPbar
-      value: 
-      objectReference: {fileID: 1453208118}
-    - target: {fileID: 3863147181730146897, guid: c2e484275472f644eaccdb38910fd629,
-        type: 3}
-      propertyPath: SPbar
-      value: 
-      objectReference: {fileID: 1544337194}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2e484275472f644eaccdb38910fd629, type: 3}
 --- !u!1001 &6819116102872423542
@@ -4588,6 +4593,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyObject
       objectReference: {fileID: 0}
+    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
+        type: 3}
+      propertyPath: prefs
+      value: 
+      objectReference: {fileID: 460828033577596871, guid: a904c7b3116929349be6737016abbc7c,
+        type: 3}
+    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
+        type: 3}
+      propertyPath: HPbar
+      value: 
+      objectReference: {fileID: 1569456859}
+    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
+        type: 3}
+      propertyPath: moveSet
+      value: 
+      objectReference: {fileID: 8745412247619669970}
+    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 986589544}
     - target: {fileID: 6819116102750727763, guid: 62b7b1025d4687340a113f9cfebad316,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4643,17 +4669,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
-        type: 3}
-      propertyPath: prefs
-      value: 
-      objectReference: {fileID: 460828033577596871, guid: a904c7b3116929349be6737016abbc7c,
-        type: 3}
-    - target: {fileID: 6819116102750727762, guid: 62b7b1025d4687340a113f9cfebad316,
-        type: 3}
-      propertyPath: HPbar
-      value: 
-      objectReference: {fileID: 1569456859}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62b7b1025d4687340a113f9cfebad316, type: 3}
 --- !u!1001 &8577098492859357895
@@ -4789,6 +4804,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turn: {fileID: 8745412247619669971}
+  allButtonsObj: {fileID: 0}
+  counterButton: {fileID: 0}
+  sundayButton: {fileID: 0}
+  butterButton: {fileID: 0}
+  jabButton: {fileID: 0}
 --- !u!114 &8745412247619669973
 MonoBehaviour:
   m_ObjectHideFlags: 0
