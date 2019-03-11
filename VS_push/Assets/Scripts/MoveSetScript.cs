@@ -53,19 +53,61 @@ public class MoveSetScript : MonoBehaviour
         moveSetDMG[9] = 0; // miss
         moveSetDMG[10] = 0; // dazed
 
-        moveSetCost[0] = 6; // counter
+        moveSetCost[0] = 8; // counter
         moveSetCost[1] = 0; // jab
-        moveSetCost[2] = 2; // straight /light
-        moveSetCost[3] = 4; // hook / heavy
-        moveSetCost[4] = 8; // sunday
-        moveSetCost[5] = 10; // dynamite
-        moveSetCost[6] = 2; // guard
-        moveSetCost[7] = 4; // recover
-        moveSetCost[8] = 6; // butterbee
+        moveSetCost[2] = 4; // straight /light
+        moveSetCost[3] = 8; // hook / heavy
+        moveSetCost[4] = 12; // sunday
+        moveSetCost[5] = 12; // dynamite
+        moveSetCost[6] = 4; // guard
+        moveSetCost[7] = 8; // recover
+        moveSetCost[8] = 12; // butterbee
         moveSetCost[9] = 0; // miss
         moveSetCost[10] = 0; // dazed
 
     }
+
+    public void doMove(int moveNum)
+    {
+        // check for valid moveNum 
+        // add later incase i add moves rip
+
+        int baseDMG = getMoveBaseDMG(moveNum);
+        int costSP = getMoveSetCost(moveNum);
+        int recSP = getSPrecover(moveNum);
+        int recHP = getHPrecover(moveNum);
+
+        int attackerDMG = getAdjustedDMG(baseDMG);
+
+
+        if (turn.PlayerTurn)
+        {
+            Debug.Log("it is player's turn!");
+
+            enemy.HP -= attackerDMG;
+            player.SP -= costSP;
+            player.SP += recSP;
+            Debug.Log("the SP rec is : " + recSP);
+            player.HP += recHP;
+
+
+            // update HP/SP bars
+            player.updatePlayerBar();
+            enemy.updateEnemyBar();
+
+            // relinquish turn
+            turn.PlayerTurn = false;
+            turn.EnemyTurn = true;
+        }
+        else
+        {
+            Debug.Log("it is enemy's turn!");
+        }
+
+        // UPDATE prevMove with the move that happened (number) (could be a miss or counter)
+
+    }
+
 
     public int getMoveBaseDMG(int moveNum)
     {
@@ -80,8 +122,7 @@ public class MoveSetScript : MonoBehaviour
     {
         if (moveNum < 10 && moveNum >= 0)
         {
-            Debug.Log("in get move set cost for move number: " + moveNum);
-            Debug.Log("the cost is : " + moveSetCost[2]);
+            Debug.Log("the SP cost is : " + moveSetCost[moveNum]);
             return moveSetCost[moveNum];
         }
         else return -1;
@@ -121,16 +162,17 @@ public class MoveSetScript : MonoBehaviour
         if (turn.PlayerTurn)
         {
             // It is players turn
-            spRecover = (int)(player.REC * player.MaxHP * 2);
+            spRecover = (int)(player.REC * player.MaxSP * 2);
         }
         else if (turn.EnemyTurn)
         {
             // It is enemy turn
-            spRecover = (int)(enemy.REC * enemy.MaxHP * 1.85);
+            spRecover = (int)(enemy.REC * enemy.MaxSP * 1.85);
         }
 
         if (moveNum == 0 || moveNum >= 9)
         {
+
             spRecover = (int)(spRecover * 0.5);
             return spRecover;
         }
@@ -144,38 +186,6 @@ public class MoveSetScript : MonoBehaviour
         }
 
         return 0;
-    }
-
-    public void doMove(int moveNum)
-    {
-        // check for valid moveNum 
-        // add later incase i add moves rip
-
-        int baseDMG = getMoveBaseDMG(moveNum);
-        int costSP = getMoveSetCost(moveNum);
-        int recSP = getSPrecover(moveNum);
-        int recHP = getHPrecover(moveNum);
-
-        int attackerDMG = getAdjustedDMG(baseDMG);
-
-
-        if (turn.PlayerTurn)
-        {
-            Debug.Log("it is player's turn!");
-            enemy.HP -= baseDMG;
-            player.SP -= costSP;
-            player.updatePlayerBar();
-            enemy.updateEnemyBar();
-            turn.PlayerTurn = false;
-            turn.EnemyTurn = true;
-        }
-        else
-        {
-            Debug.Log("it is enemy's turn!");
-        }
-
-        // UPDATE prevMove with the move that happened (number) (could be a miss or counter)
-
     }
 
     int getAdjustedDMG(int baseDMG)

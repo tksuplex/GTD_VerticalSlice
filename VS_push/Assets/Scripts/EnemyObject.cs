@@ -81,7 +81,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 4;
         TGH = 7;
 
-        player.populateDerivedValues();
+        populateDerivedValues();
 
         SundayPunch = true;
         ButterBee = false;
@@ -94,7 +94,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 10;
         TGH = 6;
 
-        player.populateDerivedValues();
+        populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = true;
@@ -107,7 +107,7 @@ public class EnemyObject : MonoBehaviour
         SPD = 3;
         TGH = 12;
 
-        player.populateDerivedValues();
+        populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = false;
@@ -122,18 +122,56 @@ public class EnemyObject : MonoBehaviour
         PWR--;
         SPD--;
         TGH--;
+        // testing if too weak or not:
+        PWR--;
+        SPD--;
+        TGH--;
 
-        player.populateDerivedValues();
+        populateDerivedValues();
 
         SundayPunch = false;
         ButterBee = false;
         DynamiteBlow = false;
     }
 
+    public void populateDerivedValues()
+    {
+        MaxSP = (int)(PWR * 20);
+        SP = MaxSP;
+        MaxHP = (int)((TGH * 100) / 2);
+        HP = MaxHP;
+
+        DMG = ((float)PWR * 10) / 100;
+        DEF = ((float)TGH * 10) / 200;
+        EVA = ((float)SPD * 10) / 300;
+        LCK = ((float)PWR + TGH + (2 * SPD)) / 200;
+        REC = (float)SPD / 200;
+    }
+
+
     void displayEnemyStats()
     {
         Debug.Log("Enemy Values:");
-        player.consoleStats();
+        consoleStats();
+    }
+
+    public void consoleStats()
+    {
+        Debug.Log("HP: " + MaxHP);
+        Debug.Log("SP: " + MaxSP);
+        Debug.Log("PWR: " + PWR);
+        Debug.Log("SPD: " + SPD);
+        Debug.Log("TGH: " + TGH);
+        Debug.Log("DMG %: " + DMG);
+        Debug.Log("DEF %: " + DMG);
+        Debug.Log("EVA %: " + EVA);
+        Debug.Log("LCK %: " + LCK);
+        Debug.Log("REC %: " + REC);
+        Debug.Log("Counter Chance %: " + CounterChance);
+
+        Debug.Log("Sunday: " + SundayPunch);
+        Debug.Log("ButterBee: " + ButterBee);
+        Debug.Log("Dynamite: " + DynamiteBlow);
     }
 
     public void updateEnemyBar()
